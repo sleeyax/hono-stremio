@@ -1,0 +1,18 @@
+{
+  "name": "big-buck-bunny",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.5.3",
+    "hono-stremio": "file:../..",
+    "stremio-addon-sdk": "^1.6.10"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240529.0",
+    "@types/node": "^22.0.2",
+    "@types/stremio-addon-sdk": "^1.6.11",
+    "wrangler": "^3.57.2"
+  }
+}

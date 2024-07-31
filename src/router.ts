@@ -65,9 +65,9 @@ export function getRouter({ manifest, get }: AddonInterface) {
       }
 
       const type = req.param('type')
-      const id = req.param('id')
+      const id = req.param('id')?.replace('.json', '')
       const config = req.param('config')
-      const extra = req.param('extra')
+      const extra = req.param('extra')?.replace('.json', '')
 
       let parsedConfig: Record<string, unknown> | false = false
       if (config?.length) {
@@ -80,7 +80,7 @@ export function getRouter({ manifest, get }: AddonInterface) {
 
       let parsedExtra: Record<string, string> | undefined = undefined
       if (extra) {
-        parsedExtra = Object.fromEntries(new URLSearchParams(extra.replace('.json', '')))
+        parsedExtra = Object.fromEntries(new URLSearchParams(extra))
       }
 
       try {

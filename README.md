@@ -76,8 +76,8 @@ That's it! You can now deploy your Stremio addon to any platform supported by Ho
 
 ### Why do I need to import the addon builder by its full relative path?
 
-The Stremio Addon SDK still uses the old `module.exports` and `require` syntax (i.e. CJS) which is not natively supported by all Hono platforms. The main issue here is that most (if not all) platforms are already using the new ES Module standard (ESM) by default. While CJS modules can be imported from ESM, there's no named exports but only a default-exported object. Thus, when importing from the package entrypoint (`index.js`) you are importing all of the code contained in the package including Node-specific code that will not work on other platforms. 
+The Stremio Addon SDK still uses the old `module.exports` and `require` syntax (i.e. CJS) which is not natively supported by all Hono platforms. The main issue here is that most (if not all) platforms are already using the new ES Module standard (ESM) by default. While CJS modules can be imported from ESM, there's no named exports but only a default-exported object. Thus, when importing from the package entrypoint (`index.js`) you are importing all of the code contained in the package including Node-specific code that will not work on other platforms.
 
-By importing the addon builder by its full relative path, you are basically hand-picking the necessary module from the package, without the additional clutter from the entrypoint. This is a temporary workaround until the Stremio Addon SDK is updated to use ESM. 
+By importing the addon builder by its full relative path, you are basically hand-picking the necessary module from the package, without the additional clutter from the entrypoint. This is a temporary workaround until the Stremio Addon SDK is updated to use ESM.
 
 If you have any suggestions or ideas on how to improve this, please open an issue to discuss! I would love to hear your thoughts.

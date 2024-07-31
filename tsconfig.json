@@ -4,5 +4,5 @@
     "outDir": "./dist",
     "types": ["vitest/globals"]
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "stremio-addon-sdk.d.ts"]
 }

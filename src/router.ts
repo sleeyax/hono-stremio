@@ -5,6 +5,7 @@ import type {
   Manifest,
   StreamFixed,
 } from 'stremio-addon-sdk'
+import { cors } from 'hono/cors'
 
 export type GetRouterOptions = {
   /**
@@ -19,6 +20,7 @@ export function getRouter(
 ) {
   const router = new Hono()
 
+  router.use('*', cors())
   router.notFound(({ json }) => json({ error: 'not found' }, 404))
 
   const hasConfig = !!manifest.config?.length

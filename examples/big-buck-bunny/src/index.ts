@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
-import addonInterface from './addon'
+import { addonInterface, landingHTML } from './addon'
 import { getRouter } from 'hono-stremio'
 
-const addonRouter = getRouter(addonInterface)
+const addonRouter = getRouter(addonInterface, { landingHTML })
 
 const app = new Hono()
 

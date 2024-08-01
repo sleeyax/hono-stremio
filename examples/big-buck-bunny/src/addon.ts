@@ -1,4 +1,5 @@
 import addonBuilder from 'stremio-addon-sdk/src/builder'
+import landingTemplate from 'stremio-addon-sdk/src/landingTemplate'
 
 const builder = new addonBuilder({
   id: 'org.myexampleaddon',
@@ -24,4 +25,5 @@ builder.defineStreamHandler(function (args) {
   }
 })
 
-export default builder.getInterface()
+export const addonInterface = builder.getInterface()
+export const landingHTML = landingTemplate(addonInterface.manifest)

@@ -20,6 +20,7 @@ ESM:
 ```js
 // addon.js
 import addonBuilder from 'stremio-addon-sdk/src/builder'
+import landingTemplate from 'stremio-addon-sdk/src/landingTemplate'
 
 const builder = new addonBuilder({
   // ...
@@ -30,6 +31,7 @@ builder.defineStreamHandler(function (args) {
 })
 
 const addonInterface = builder.getInterface() /// <--- get the interface
+const landingHTML = landingTemplate(addonInterface.manifest) // (optional) Generate landing page HTML. You can also provide your own HTML if you prefer.
 ```
 
 CJS:
@@ -37,6 +39,7 @@ CJS:
 ```js
 // addon.js
 const addonBuilder = require('stremio-addon-sdk/src/builder')
+const landingTemplate = require('stremio-addon-sdk/src/landingTemplate')
 
 const builder = new addonBuilder({
   // ...
@@ -47,6 +50,7 @@ builder.defineStreamHandler(function (args) {
 })
 
 const addonInterface = builder.getInterface() /// <--- get the interface
+const landingHTML = landingTemplate(addonInterface.manifest) // (optional) Generate landing page HTML. You can also provide your own HTML if you prefer.
 ```
 
 > [!NOTE]  
@@ -61,7 +65,7 @@ import { getRouter } from 'hono-stremio'
 
 // ...
 
-const addonRouter = getRouter(addonInterface)
+const addonRouter = getRouter(addonInterface, { landingHTML })
 
 const app = new Hono()
 

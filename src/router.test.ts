@@ -115,4 +115,44 @@ describe('stremio router', () => {
       expect(res.headers.get('location')).toBe('stremio://mock-redirect')
     })
   })
+
+  describe('landing page handler', () => {
+    it('should get the landing page', async () => {
+      const app = getRouter(createAddonInterfaceMock(), { landingHTML: '<p>mock-addon</p>' })
+      const res = await app.request(getUrl(''))
+      expect(res).not.toBeNull()
+      expect(res.status).toBe(200)
+      const body = await res.text()
+      expect(body).toBe('<p>mock-addon</p>')
+    })
+
+    it('should redirect with config', async () => {
+      const app = getRouter(
+        createAddonInterfaceMock({
+          config: [{ key: 'mock-config', type: 'text' }],
+          behaviorHints: { configurable: true },
+        }),
+        { landingHTML: '<p>mock-addon</p>' }
+      )
+      const res = await app.request(getUrl(''))
+      expect(res).not.toBeNull()
+      expect(res.status).toBe(302)
+      expect(res.headers.get('location')).toBe('/configure')
+    })
+
+    it('should get the landing page with config', async () => {
+      const app = getRouter(
+        createAddonInterfaceMock({
+          config: [{ key: 'mock-config', type: 'text' }],
+          behaviorHints: { configurable: true },
+        }),
+        { landingHTML: '<p>mock-addon</p>' }
+      )
+      const res = await app.request(getUrl('configure'))
+      expect(res).not.toBeNull()
+      expect(res.status).toBe(200)
+      const body = await res.text()
+      expect(body).toBe('<p>mock-addon</p>')
+    })
+  })
 })

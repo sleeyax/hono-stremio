@@ -6,7 +6,17 @@ import type {
   StreamFixed,
 } from 'stremio-addon-sdk'
 
-export function getRouter({ manifest, get }: AddonInterface) {
+export type GetRouterOptions = {
+  /**
+   * Landing page HTML.
+   */
+  landingHTML?: string
+}
+
+export function getRouter(
+  { manifest, get }: AddonInterface,
+  { landingHTML }: GetRouterOptions = {}
+) {
   const router = new Hono()
 
   router.notFound(({ json }) => json({ error: 'not found' }, 404))
@@ -17,6 +27,16 @@ export function getRouter({ manifest, get }: AddonInterface) {
     console.warn(
       'manifest.config is set but manifest.behaviorHints.configurable is disabled, the "Configure" button will not show in the Stremio apps'
     )
+  }
+
+  if (landingHTML) {
+    router.get('/', ({ redirect, html }) => {
+      if (hasConfig) {
+        return redirect('/configure')
+      }
+
+      return html(landingHTML)
+    })
   }
 
   if (hasConfig) {
@@ -41,6 +61,10 @@ export function getRouter({ manifest, get }: AddonInterface) {
 
       return json(manifest)
     })
+
+    if (landingHTML) {
+      router.get('/configure', ({ html }) => html(landingHTML))
+    }
   }
 
   router.get('/manifest.json', ({ json }) => json(manifest))
